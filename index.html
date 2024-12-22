@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Random</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="content">
+            <h2>Nhập tên vào ô dưới:</h2>
+            <textarea id="nameInput" rows="5" cols="30"
+                placeholder="Nhập từng tên mỗi dòng..."></textarea><br>
+
+            <button onclick="action()">random</button>
+
+        </div>
+
+        <div id="inform">
+            <p>Chúng ta có người chiến thắng!!!</p>
+            <p id="output"></p>
+            <button onclick="xoa()">Xóa</button>
+            <button onclick="next()">Tiếp</button>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
