@@ -3,26 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Random</title>
-
+        <title>Random Picker</title>
+        <link rel="icon" href="./audio/logohuy2.png" type="image/png">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <audio id="votay" src="./audio/votay.mp3"></audio>
         <div id="content">
-            <h2>Nhập tên vào ô dưới:</h2>
+            <h2>Nhập vào ô dưới:</h2>
             <textarea id="nameInput" rows="5" cols="30"
                 placeholder="Nhập từng tên mỗi dòng..."></textarea><br>
-
-            <button onclick="action()">random</button>
-
+            <input type="text" id="output" readonly>
+            <button onclick="action()">Random</button>
         </div>
 
+        <!-- Màn che nền mờ -->
+        <div id="overlay"></div>
+
+        <!-- Thông báo -->
         <div id="inform">
+
             <p>Chúng ta có người chiến thắng!!!</p>
-            <p id="output"></p>
+            <p id="output2"></p>
             <button onclick="xoa()">Xóa</button>
-            <button onclick="next()">Tiếp</button>
+            <button onclick="next()">Đóng</button>
         </div>
+
         <script src="main.js"></script>
     </body>
 </html>

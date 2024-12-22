@@ -1,46 +1,70 @@
 const textarea = document.getElementById("nameInput");
 const output = document.getElementById("output");
-const random = document.getElementById("random");
+const output2 = document.getElementById("output2");
 const thongbao = document.getElementById("inform");
-let lines = []; // Mảng lưu trữ các dòng từ textarea
-let ranindex = -1; // Chỉ số ngẫu nhiên của dòng được chọn
+const overlay = document.getElementById("overlay");
+const votay = document.getElementById("votay");
+let lines = [];
+let ranindex = -1;
+let interval;
+let duration = 80;
+let isProcessing = false;
 
-thongbao.style.display = "none";
 function action() {
-  thongbao.style.display = "block";
+  if (isProcessing) {
+    alert("Bạn cần nhấn 'Đóng' trước khi thực hiện hành động mới!");
+    return;
+  }
+
   lines = textarea.value
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line !== "");
-  const rando = Math.random();
-  ranindex = Math.floor(rando * lines.length);
-  const raninline = lines[ranindex];
-  console.log(
-    `randinex=${ranindex} và độ dài chuỗi là ${lines.length} và số random = ${rando}`
-  );
 
-  output.innerHTML = `chúc mừng lựa chọn: ${raninline}`;
-  //   xoa = () => {
-  //     lines.splice(ranindex, 1);
-  //     textarea.value = lines.join("\n");
-  //     thongbao.style.display = "none";
-  //   };
-  //   next = () => {
-  //     thongbao.style.display = "none";
-  //   };
+  if (lines.length === 0) {
+    output.value = "Không có dữ liệu!";
+    return;
+  }
 
-  // Xử lý khi người dùng nhập vào textarea
+  isProcessing = true;
+  let totalTime = 0;
+  duration = 80;
+
+  interval = setInterval(() => {
+    ranindex = Math.floor(Math.random() * lines.length);
+    const raninline = lines[ranindex];
+    output.value = raninline;
+
+    totalTime += duration;
+
+    if (totalTime >= 10000) {
+      clearInterval(interval);
+      output2.innerHTML = `Lựa chọn: ${raninline}`;
+      overlay.style.display = "block";
+      thongbao.style.display = "block";
+      votay.play();
+    }
+
+    duration += 50;
+  }, duration);
 }
-// Hàm xóa dòng được chọn
+
 function xoa() {
   if (ranindex !== -1) {
-    lines.splice(ranindex, 1); // Xóa phần tử tại ranindex
-    textarea.value = lines.join("\n"); // Cập nhật lại giá trị textarea
-    thongbao.style.display = "none"; // Ẩn ô thông báo sau khi xóa
+    lines.splice(ranindex, 1);
+    textarea.value = lines.join("\n");
+    overlay.style.display = "none";
+    thongbao.style.display = "none";
+    votay.pause();
+    votay.currentTime = 0;
+    isProcessing = false;
   }
 }
 
-// Hàm tiếp tục (ẩn thông báo mà không xóa)
 function next() {
-  thongbao.style.display = "none"; // Ẩn ô thông báo mà không thay đổi textarea
+  overlay.style.display = "none";
+  thongbao.style.display = "none";
+  votay.pause();
+  votay.currentTime = 0;
+  isProcessing = false;
 }
